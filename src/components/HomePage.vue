@@ -16,8 +16,15 @@
         </h3>
       </v-col>
     </v-row>
-    <v-row justify="center" class="mt-15">
-      <v-btn :to="{ name: 'Main' }" style="color:white" rounded x-large color="#F22539">Get Started</v-btn>
+    <v-row justify="center" class="mt-15 mb-15">
+      <v-btn
+        :to="{ name: 'Main' }"
+        style="color:white"
+        rounded
+        x-large
+        color="#F22539"
+        >Get Started</v-btn
+      >
     </v-row>
   </div>
 </template>

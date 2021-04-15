@@ -6,6 +6,7 @@ import EvaIcons from "vue-eva-icons";
 import vuetify from "./plugins/vuetify";
 import VueRouter from "vue-router";
 import router from "./router";
+import store from "./store";
 Vue.use(VueRouter);
 
 Vue.use(EvaIcons);
@@ -13,6 +14,7 @@ Vue.use(EvaIcons);
 Vue.use(Vuetify);
 
 new Vue({
+  store,
   router,
   vuetify,
   render: (h) => h(App),
