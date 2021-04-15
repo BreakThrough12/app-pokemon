@@ -25,6 +25,34 @@ const actions = {
         });
     });
   },
+  readOne: async function({ commit }, name) {
+    return new Promise((resolve, reject) => {
+      Axios({
+        url: "https://pokeapi.co/api/v2/pokemon/" + name,
+        method: "get",
+        headers: { Authorization: "Bearer sicom" },
+      })
+        .then((res) => {
+          let pokemon = {
+            weight: res.data.weight,
+            height: res.data.height,
+            types: res.data.types ? res.data.types : "None",
+            image: res.data.sprites.front_default,
+          };
+          console.log(res.data.sprites.front_default);
+          console.log(res.data.weight);
+          console.log(res.data.height);
+          console.log("tipos:", res.data.types);
+
+          commit("setPokemon", pokemon);
+
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 };
 
 export default actions;

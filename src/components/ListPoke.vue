@@ -12,71 +12,94 @@
       </v-col>
     </v-row>
     <div class="scrollbar list">
-      <template v-if="pokeList.length === 0">
-        <div>
-          <h3>No hay ninguno</h3>
-        </div>
+      <template>
+        <v-row
+          v-bind:key="pokemon.name"
+          v-for="pokemon in pokeList"
+          align="center"
+          justify="center"
+        >
+          <v-col cols="10" md="6" sm="11">
+            <v-card elevation="0">
+              <v-row no-gutters justify="center" align="center">
+                <v-col
+                  @click="
+                    () => {
+                      findInfo(pokemon.name);
+                    }
+                  "
+                  cols="10"
+                  style="cursor:pointer"
+                  ><v-card-title>{{
+                    pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+                  }}</v-card-title></v-col
+                >
+                <v-col class="ml-md-5" justify-center cols="1"
+                  ><v-btn
+                    @click="pokemon.favorite = !pokemon.favorite"
+                    :ripple="false"
+                    color="#E8E8E8"
+                    small
+                    elevation="0"
+                    fab
+                    ><img
+                      width="25"
+                      height="25"
+                      :src="getImgUrl(pokemon.favorite)"
+                      alt="star"
+                  /></v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
       </template>
-
-      <v-row
-        v-bind:key="pokemon.name"
-        v-for="pokemon in pokeList"
-        align="center"
-        justify="center"
-      >
-        <v-col cols="10" md="6" sm="11">
-          <v-card elevation="0">
-            <v-row no-gutters justify="center" align="center">
-              <v-col cols="10"
-                ><v-card-title>{{
-                  pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
-                }}</v-card-title></v-col
-              >
-              <v-col class="ml-md-5" justify-center cols="1"
-                ><v-btn
-                  @click="pokemon.favorite = !pokemon.favorite"
-                  :ripple="false"
-                  color="#E8E8E8"
-                  small
-                  elevation="0"
-                  fab
-                  ><img
-                    width="25"
-                    height="25"
-                    :src="getImgUrl(pokemon.favorite)"
-                    alt="star"
-                /></v-btn>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
+      <PokeInfo
+        :name="{ name }"
+        :pokemon="{ dataPokemon }"
+        :dialog.sync="show"
+      />
     </div>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
+import PokeInfo from "./PokeInfo";
 export default {
   name: "ListPoke",
+  components: {
+    PokeInfo,
+  },
   data() {
     return {
       favorite: false,
       searchName: "",
+      show: false,
+      dataPokemon: undefined,
     };
   },
   props: ["pokemons", "condition"],
   methods: {
+    ...mapActions("pokemon", ["readOne"]),
+    findInfo(name) {
+      this.readOne(name).then((res) => {
+        if (res) {
+          this.show = true;
+          this.name = name;
+          this.dataPokemon = this.pokemon;
+        }
+      });
+    },
     getImgUrl(favorite) {
-      console.log(this.pokemons.pokemons);
       if (!favorite) return require("../assets/img/Vector.png");
       else return require("../assets/img/Vector2.png");
     },
   },
   computed: {
+    ...mapState("pokemon", ["pokemon"]),
     pokeList() {
-      console.log(this.searchName);
-
       return this.pokemons.pokemons.filter((pokemon) => {
-        return pokemon.name?.includes(this.searchName);
+        return pokemon.name?.includes(this.searchName.toLowerCase());
       });
     },
     pokeListFav() {
@@ -102,13 +125,13 @@ export default {
 }
 
 .list {
-  height: 67vh;
+  height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
 @media screen and (max-width: 769px) {
   .list {
-    height: 77vh;
+    height: 73vh;
     overflow-y: auto;
     overflow-x: hidden;
   }

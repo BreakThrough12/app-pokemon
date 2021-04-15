@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: {
     pokemons: [],
-    loadingData: false,
+    pokemon: undefined,
   },
   actions,
   mutations,

@@ -21,7 +21,7 @@
         align-content="center"
         no-gutters
       >
-        <v-col class="text-center mr-md-8 mr-sm-10" md="2" sm="5">
+        <v-col class="text-center ml-md-15  " md="3" sm="6">
           <v-btn
             :color="allBtn ? '#F22539' : '#BFBFBF'"
             elevation="0"
@@ -40,7 +40,7 @@
             All</v-btn
           >
         </v-col>
-        <v-col class="text-center ml-md-8 ml-sm-10" md="2" sm="5">
+        <v-col class="text-center mr-md-15  " md="3" sm="6">
           <v-btn
             style="color:white"
             elevation="0"
@@ -104,7 +104,7 @@ export default {
 <style>
 .btn {
   color: white;
-  width: 16vw;
+  width: 20vw;
 }
 
 @media screen and (max-width: 769px) {
