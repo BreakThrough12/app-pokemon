@@ -8,8 +8,11 @@ import VueRouter from "vue-router";
 import router from "./router";
 import store from "./store";
 import VueClipboard from "vue-clipboard2";
-Vue.use(VueRouter);
+
+VueClipboard.config.autoSetContainer = true; // add this line
 Vue.use(VueClipboard);
+Vue.use(VueRouter);
+
 Vue.use(EvaIcons);
 
 Vue.use(Vuetify);

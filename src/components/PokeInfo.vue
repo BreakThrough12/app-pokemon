@@ -80,7 +80,12 @@
         <v-divider class="mr-6 ml-6"></v-divider>
         <v-row justify="center" align="center" no-gutters>
           <v-col class="mt-5 mb-5 ml-6">
-            <v-btn x-large rounded color="#F22539" style="color:white"
+            <v-btn
+              v-clipboard:copy="copy"
+              x-large
+              rounded
+              color="#F22539"
+              style="color:white"
               >Share to My Friends</v-btn
             >
           </v-col>
@@ -115,6 +120,11 @@
 <script>
 export default {
   name: "PokeInfo",
+  data() {
+    return {
+      value: "",
+    };
+  },
 
   props: {
     pokemon: {
@@ -130,10 +140,22 @@ export default {
       default: false,
     },
   },
-
+  updated() {},
+  computed: {
+    copy() {
+      const data =
+        this.name.name +
+        ", " +
+        this.pokemon.dataPokemon.types[0].type.name +
+        " ," +
+        this.pokemon.dataPokemon.types[1].type.name;
+      return data;
+    },
+  },
   methods: {
     close() {
       this.$emit("update:dialog", false);
+      this.value = "";
     },
   },
 };
