@@ -5,13 +5,19 @@
         <v-text-field
           elevation="0"
           prepend-inner-icon="mdi-magnify"
-          label="Solo"
+          label="Name Pokemon"
           solo
           v-model="searchName"
         ></v-text-field>
       </v-col>
     </v-row>
+
     <div class="scrollbar list">
+      <template v-if="pokeList.length === 0">
+        <v-container>
+          <NotFound />
+        </v-container>
+      </template>
       <template>
         <v-row
           v-bind:key="pokemon.name"
@@ -25,7 +31,7 @@
                 <v-col
                   @click="
                     () => {
-                      findInfo(pokemon.name);
+                      findInfo(pokemon.name, pokemon.favorite);
                     }
                   "
                   cols="10"
@@ -58,6 +64,7 @@
         :name="{ name }"
         :pokemon="{ dataPokemon }"
         :dialog.sync="show"
+        :fav="{ fav }"
       />
     </div>
   </div>
@@ -65,10 +72,12 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import PokeInfo from "./PokeInfo";
+import NotFound from "./NotFound";
 export default {
   name: "ListPoke",
   components: {
     PokeInfo,
+    NotFound,
   },
   data() {
     return {
@@ -76,16 +85,18 @@ export default {
       searchName: "",
       show: false,
       dataPokemon: undefined,
+      fav: false,
     };
   },
   props: ["pokemons", "condition"],
   methods: {
     ...mapActions("pokemon", ["readOne"]),
-    findInfo(name) {
+    findInfo(name, fav) {
       this.readOne(name).then((res) => {
         if (res) {
           this.show = true;
           this.name = name;
+          this.fav = fav;
           this.dataPokemon = this.pokemon;
         }
       });

@@ -7,8 +7,9 @@ import vuetify from "./plugins/vuetify";
 import VueRouter from "vue-router";
 import router from "./router";
 import store from "./store";
+import VueClipboard from "vue-clipboard2";
 Vue.use(VueRouter);
-
+Vue.use(VueClipboard);
 Vue.use(EvaIcons);
 
 Vue.use(Vuetify);

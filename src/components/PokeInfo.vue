@@ -74,12 +74,35 @@
           </template>
         </v-card-title>
         <v-divider class="mr-6 ml-6"></v-divider>
-        <v-row no-gutters>
+        <v-row justify="center" align="center" no-gutters>
           <v-col class="mt-5 mb-5 ml-6">
             <v-btn x-large rounded color="#F22539" style="color:white"
               >Share to My Friends</v-btn
             >
           </v-col>
+
+          <template v-if="fav.fav">
+            <v-col class="ml-15">
+              <v-img
+                class="ml-15"
+                contain
+                height="40"
+                :src="require('../assets/img/Active.png')"
+              >
+              </v-img>
+            </v-col>
+          </template>
+          <template v-else>
+            <v-col class="ml-15">
+              <v-img
+                class="ml-15"
+                contain
+                height="40"
+                :src="require('../assets/img/Disabled.png')"
+              >
+              </v-img>
+            </v-col>
+          </template>
         </v-row>
       </v-card>
     </v-dialog>
@@ -97,6 +120,9 @@ export default {
       default: "",
     },
     dialog: {
+      default: false,
+    },
+    fav: {
       default: false,
     },
   },
