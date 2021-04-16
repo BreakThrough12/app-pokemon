@@ -26,7 +26,7 @@
             style="font-size: 18px;line-height: 27px;font-weight: 500;"
             class="subtitle"
           >
-            {{ name.name }}
+            {{ name.name.charAt(0).toUpperCase() + name.name.slice(1) }}
           </h3>
         </v-card-title>
         <v-divider class="mr-6 ml-6"></v-divider>
@@ -46,6 +46,7 @@
           <h3 style="font-size: 18px;line-height: 27px;font-weight: 700;">
             Height:
           </h3>
+
           <h3
             style="font-size: 18px;line-height: 27px;font-weight: 500;"
             class="subtitle"
@@ -61,9 +62,12 @@
           <template v-for="(type, index) in pokemon.dataPokemon.types">
             <h3
               v-bind:key="type.type.name"
+              class="subtitle"
               style="font-size: 18px;line-height: 27px;font-weight: 500;"
             >
-              {{ type.type.name }}
+              {{
+                type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)
+              }}
             </h3>
             <h3
               v-if="index < pokemon.dataPokemon.types.length - 1"
@@ -146,5 +150,6 @@ export default {
   font-size: 18px;
   line-height: 27px;
   font-weight: 500;
+  margin-left: 5px;
 }
 </style>
